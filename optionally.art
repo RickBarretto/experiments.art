@@ -1,0 +1,75 @@
+optionally: $[params :block body :block][
+    ensure -> all? map params [p] [or? type? p word? p]
+    preBody: @[]
+
+    injectAttribute: $[identifier :string][
+        ; let <identifier> attr <identifier>
+        append 'preBody flatten @[[let] identifier [attr] identifier]
+    ]
+
+    injectAffirmationFromPredicate: $[predicate :string][
+        ensure -> suffix? predicate "?"
+        affirmation: chop variable
+
+        ; let <affirmation> attr <affirmation>
+        injectAttribute affirmation        
+        ; let <predicate> any? @[<predicate> <affirmation>]
+        append 'preBody flatten.once @[
+            [let] predicate [any? array] @[@[to :word predicate to :word affirmation]]
+        ]
+    ]
+
+    injectTypeChecking: $[identifier :word typeOf :type][
+        isType: flatten @[[is?] typeOf identifier]  ; istype: is? <type> <ident>
+        isNull: flatten @[[null?] identifier]       ; isnull: null? <ident>
+
+        assertion: flatten @[[or?] isType isNull]   ; ensure -> or? <istype> <isnull>     
+        append 'preBody flatten.once @[[ensure] @[assertion]]
+    ]
+
+    variable: null
+    loop params [param][
+        if word? param [
+            variable: to :string param
+            injectAttribute variable
+
+            ; Automagically adds affirmation from predicate
+            ; eg.: ``end`` from ``end?``
+            if suffix? variable "?" [
+                injectAffirmationFromPredicate variable
+            ]
+        ]
+
+        if type? param [
+            ensure -> not? null? variable
+            injectTypeChecking (to :word variable) param
+        ]
+    ]
+
+    preBody ++ body
+
+]
+
+if standalone? [
+
+    tag: $[name :string content :any] optionally [closed? :logical][
+        join @[
+            ~"<|name|/>"
+            content
+            if closed? -> ~"</|name|>"
+        ]
+    ]
+
+    debug: $[expr][
+        prints as.code expr
+        prints " ; => "
+        print expr
+    ]
+
+    debug -> tag "input" ""
+    debug -> tag.closed?: false "input" ""
+    debug -> tag.closed "article" "Lorem Ipsum..."
+    debug -> tag.closed?: true "article" "Lorem Ipsum..."
+
+
+]
