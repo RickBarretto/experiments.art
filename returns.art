@@ -1,0 +1,31 @@
+returns: $[returns :block :type body :block][
+    body
+]
+
+alias {~>} 'returns!
+
+
+if standalone? [
+    fromPredicate: $[predicate :string] ~> [:string :null] [
+        switch suffix? predicate "?" 
+            -> chop predicate
+            -> null
+    ]
+
+    toPredicate: $[identifier :string] returns :string [
+        switch suffix? identifier "?" 
+            -> identifier
+            -> ~"|identifier|?"
+    ]
+
+    debug: $[expr][
+        prints as.code expr
+        prints " ; => "
+        print expr
+    ]
+
+    debug -> fromPredicate "input?"
+    debug -> fromPredicate "input"
+    debug -> toPredicate "input?"
+    debug -> toPredicate "input"
+]
