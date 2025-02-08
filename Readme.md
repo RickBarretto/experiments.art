@@ -2,4 +2,4 @@
 
 Doing some experiments with Arturo.
 
-Examples are put inside the code. :wink:
+Examples are embedded in each file. :wink:
