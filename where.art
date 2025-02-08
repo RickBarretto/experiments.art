@@ -1,0 +1,24 @@
+where: $[condition :block body :block][
+    preBody: @[]
+
+    assertion: flatten @[condition]   ; ensure -> or? <istype> <isnull>     
+    append 'preBody flatten.once @[[ensure] @[assertion]]
+
+    preBody ++ body
+
+]
+
+if standalone? [
+    fromPredicate: $[predicate :string] where [suffix? predicate "?"] [
+        chop predicate
+    ]
+
+    debug: $[expr][
+        prints as.code expr
+        prints " ; => "
+        print expr
+    ]
+
+    debug -> fromPredicate "input?"
+    debug -> fromPredicate "input"
+]
