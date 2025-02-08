@@ -1,0 +1,3 @@
+callable?: $[fn :word :literal :string :pathLiteral][
+    contains? [:function :method] type var fn
+]
