@@ -1,0 +1,45 @@
+import ./{optionally}!
+
+struct: $ [class :type fields :block][
+    define class [
+        init: constructor fields
+        set: method [][panic "Not implemented"] 
+        if attr? 'sortBy -> 
+            compare: sortable attr 'sortBy
+    ]
+]
+
+
+struct :car .sortBy: 'price 
+[
+    model :string
+    maker :string
+    year  :integer
+    price :floating
+]
+
+car: $[model :string] optionally [
+    maker :string
+    year  :integer
+    price :floating
+] [
+    ensure -> not? null? maker
+    ensure -> not? null? year
+    ensure -> not? null? price
+
+    to :car [model maker year price]
+]
+
+; print stack
+
+bmw: car .maker: "BMW" .year: 2020 .price: 142000.00 
+    "M5 Competition"
+
+audi: car .maker: "Audi" .year: 2020 .price: 110000.00
+    "RS6 Avant"
+
+mercedes: car .maker: "Mercedes" .year: 2020 .price: 150000.00
+    "AMG GT"
+
+cars: @[bmw audi mercedes]
+print sort cars
