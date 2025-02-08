@@ -1,0 +1,13 @@
+trace: $[value :any message :string][
+    print ~"[TRACE]: |message| => |value|"
+    value
+]
+
+if standalone? [
+    reversed: ["Spain" "Japan" "USA" "Brazil" "Germany"]
+        | trace "original"
+        | sort
+        | trace "sorted"
+        | reverse
+        | trace "final"
+]
