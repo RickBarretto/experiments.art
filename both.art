@@ -1,0 +1,22 @@
+both?: $[value :any conditions :block][
+    conditions
+        | select => word?
+        | map 'condition [call condition @[value]]
+        | all?
+]
+
+positive?: $ => greater? 0 
+
+; BROKEN: Segfaults
+
+print both? 1 [
+    integer? 
+    positive?
+    one?
+]
+
+print both? 1 [
+    integer? 
+    positive?
+    one?
+]
