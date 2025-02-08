@@ -1,4 +1,6 @@
 both?: $[value :any conditions :block][
+    ;; Checks if `value` follows every `condition`
+ 
     conditions
         | select => word?
         | map 'condition [call condition @[value]]

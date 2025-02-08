@@ -1,3 +1,4 @@
 callable?: $[fn :word :literal :string :pathLiteral][
+    ;; Checks if `fn`'s value is callable
     contains? [:function :method] type var fn
 ]

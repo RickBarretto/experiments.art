@@ -1,4 +1,5 @@
 returns: $[returns :block :type body :block][
+    ;; Just a notation for documentation purposes
     body
 ]
 

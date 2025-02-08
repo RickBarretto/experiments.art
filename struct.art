@@ -1,6 +1,10 @@
 import ./{optionally}!
 
 struct: $ [class :type fields :block][
+    ;; `struct` is a simplified version of `define`.
+    ;; 
+    ;; `.sortBy` is the same as the method `sort`.
+    
     define class [
         init: constructor fields
         set: method [][panic "Not implemented"] 

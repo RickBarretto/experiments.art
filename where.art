@@ -1,4 +1,7 @@
 where: $[condition :block body :block][
+    ;; The same as `ensure`, but being a sugar-syntax 
+    ;; for contract-based programming.  
+    
     preBody: @[]
 
     assertion: flatten @[condition]   ; ensure -> or? <istype> <isnull>     

@@ -1,4 +1,8 @@
 optionally: $[params :block body :block][
+    ;; Automatically creates attributes for a function.
+    ;; 
+    ;; Obs.: If some parameter is suffixed by `?`, 
+    ;; the version without it will be created.
     ensure -> all? map params [p] [or? type? p word? p]
     preBody: @[]
 

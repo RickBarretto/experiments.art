@@ -1,4 +1,6 @@
 trace: $[value :any message :string][
+    ;; Prints the current `value` with a `message` and returns the value.
+    
     print ~"[TRACE]: |message| => |value|"
     value
 ]
