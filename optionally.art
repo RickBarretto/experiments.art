@@ -33,7 +33,8 @@ optionally: $[params :block body :block][
 
     variable: null
     loop params [param][
-        if word? param [
+        case type param [
+        :word [
             variable: to :string param
             injectAttribute variable
 
@@ -44,9 +45,10 @@ optionally: $[params :block body :block][
             ]
         ]
 
-        if type? param [
+        :type [
             ensure -> not? null? variable
             injectTypeChecking (to :word variable) param
+        ]
         ]
     ]
 
